@@ -93,11 +93,15 @@ None. Noted that the repo ships with many pre-existing failures unrelated to
 
 ### Check-in 2 (end of week)
 
-**PR link:** https://github.com/jamjamgobambam/pathreview/pull/133
-<!-- Currently opened as a DRAFT for peer feedback. Mark "Ready for review"
-before the deadline once peer/mentor feedback is addressed. -->
+**PR link:** https://github.com/jamjamgobambam/pathreview/pull/134
+<!-- Opened as a DRAFT for peer feedback. Mark "Ready for review" before the
+deadline once peer/mentor feedback is addressed.
+NOTE: the PR is opened from a clean branch (`test/106-shared-user-profile-fixture`)
+that contains ONLY the code fix. This working branch (`test/106-sample-user-profile-fixture`)
+keeps the course artifacts (JOURNAL.md, PLAN.md) and is what I submit to the
+portal — JOURNAL.md/PLAN.md are intentionally NOT included in the public PR. -->
 
-**Branch:** `test/106-sample-user-profile-fixture`
+**Branch:** `test/106-sample-user-profile-fixture` (working/portal branch); PR opened from clean branch `test/106-shared-user-profile-fixture`
 
 **What you built:**
 A shared `sample_user_profile` pytest fixture in `tests/conftest.py` that returns
