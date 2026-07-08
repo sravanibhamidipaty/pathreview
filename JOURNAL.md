@@ -122,3 +122,72 @@ pre-existing and unrelated to #106. After my change: same 53 failing, 379 passin
 (4 new tests). My changed files pass ruff, black, and the mypy pre-commit hook. -->
 
 **Draft PR feedback received from:** none yet (draft opened for peer/mentor review)
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No review or comments arrived on PR #134 by the end of the week (the PR remained
+an open draft with zero comments and zero reviews). I opened it early as a draft
+to invite peer/mentor feedback, but none came in during the window.
+
+**How you responded:**
+N/A — no feedback to respond to. If a reviewer raises the `tests/fixtures/` vs
+`tests/conftest.py` placement question I flagged in the PR description, my planned
+response is to relocate the fixture to a `tests/fixtures/` module if they prefer,
+since the fixture body is convention-agnostic.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Telling *my* failures apart from the repo's failures. When I first ran
+`make test-unit` the suite reported 53 failing tests, and `make lint` reported
+~182 ruff errors — none of which had anything to do with my issue. The hard part
+wasn't writing the fixture (that was ~20 lines); it was proving my change was
+safe by capturing a baseline first, then re-running to show the exact same 53
+failures and 4 new passing tests. I also didn't expect to spend real effort just
+choosing an issue: #123, #114, and #115 were all already implemented in the
+cloned code, so the described "gaps" didn't exist. I had to verify each candidate
+against the actual source before trusting the tracker.
+
+**What did you learn about working in a large codebase?**
+Conventions beat instructions. The issue literally said the fixture was "missing
+from `tests/fixtures/`," but the existing sample fixtures lived in
+`tests/conftest.py` — so matching the real pattern mattered more than following
+the issue text word-for-word (and I documented that choice for the reviewer). I
+also learned to scope narrowly: there was a tempting "clean-up" (refactoring
+`test_review_service.py`'s local `mock_profile` to use my fixture), but that file
+had pre-existing failures, so touching it would have blurred the diff. In your
+own project you can change anything; in someone else's code the bar is "smallest
+change that solves the issue without making anything worse."
+
+**How did AI tools help — and where did they fall short?**
+AI was strongest at navigation and verification scaffolding: grepping for the
+`Profile` model, reading `core/models/profile.py` to get the exact field list,
+running baseline vs. post-change test comparisons, and catching tooling gates
+(the pre-commit `mypy` hook rejected an untyped test function; ruff wanted
+`datetime.UTC` instead of `timezone.utc`). Where it fell short was judgment:
+the AI initially bundled `JOURNAL.md` and `PLAN.md` into the PR to the public
+upstream repo, and *I* had to catch that those course artifacts don't belong in
+an open-source contribution — which forced a clean re-do onto a separate PR
+branch. AI also can't get me peer review or read the instructor's intent.
+
+**What would you do differently if you started over?**
+Two things. First, verify an issue is actually unresolved *before* claiming it —
+I lost time on #123 assuming the tracker was accurate. Second, separate the
+"course journal" branch from the "public PR" branch from day one, instead of
+committing JOURNAL.md/PLAN.md onto the same branch I later needed to be a clean
+contribution. Setting that up in Week 7 would have avoided closing and reopening
+a PR in Week 9.
+
+**What are you most proud of?**
+The rigor around pre-existing failures. Rather than hand-waving "tests pass," I
+recorded concrete before/after numbers (53 failing → still 53 failing, 375 → 379
+passing) and documented them in both the PR and this journal, so a reviewer can
+trust that my change is genuinely additive and risk-free. That evidence-first
+habit is the thing I'll carry forward.
